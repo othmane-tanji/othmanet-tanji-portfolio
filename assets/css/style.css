@@ -958,7 +958,9 @@ main {
 
 .project-card {
   color: inherit;
+  cursor: pointer;
   text-align: left;
+  touch-action: manipulation;
 }
 
 .project-img {
@@ -1936,8 +1938,9 @@ textarea.form-input::-webkit-resizer { display: none; }
   }
 
   .main-content {
-    min-width: 75%;
-    width: 75%;
+    flex: 1;
+    min-width: 0;
+    width: auto;
     margin: 0;
   }
 
@@ -1948,6 +1951,7 @@ textarea.form-input::-webkit-resizer { display: none; }
    */
 
   .sidebar {
+    flex: 0 0 320px;
     position: sticky;
     top: 60px;
     max-height: max-content;

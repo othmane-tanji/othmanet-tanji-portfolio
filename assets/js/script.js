@@ -46,6 +46,35 @@ testimonialsItem.forEach(item => {
 if (modalCloseBtn) modalCloseBtn.addEventListener("click", testimonialsModalFunc);
 if (overlay) overlay.addEventListener("click", testimonialsModalFunc);
 
+// ===== Project details modal =====
+const projectOpenButtons = document.querySelectorAll("[data-project-open]");
+const projectModal = document.querySelector("[data-project-modal]");
+const projectOverlay = document.querySelector("[data-project-overlay]");
+const projectCloseButton = document.querySelector("[data-project-close]");
+
+const closeProjectModal = () => {
+  if (!projectModal || !projectOverlay) return;
+  projectModal.classList.remove("active");
+  projectOverlay.classList.remove("active");
+  projectModal.hidden = true;
+}
+
+const openProjectModal = () => {
+  if (!projectModal || !projectOverlay) return;
+  projectModal.hidden = false;
+  projectModal.classList.add("active");
+  projectOverlay.classList.add("active");
+  projectCloseButton?.focus();
+}
+
+projectOpenButtons.forEach(button => button.addEventListener("click", openProjectModal));
+projectCloseButton?.addEventListener("click", closeProjectModal);
+projectOverlay?.addEventListener("click", closeProjectModal);
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && projectModal?.classList.contains("active")) closeProjectModal();
+});
+
 // ===== Custom select / Portfolio filter =====
 const select = document.querySelector("[data-select]");
 const selectItems = document.querySelectorAll("[data-select-item]");
@@ -55,7 +84,8 @@ const filterItems = document.querySelectorAll("[data-filter-item]");
 
 const filterFunc = (selectedValue) => {
   filterItems.forEach(item => {
-    if (selectedValue === "all" || selectedValue === item.dataset.category) {
+    const categories = item.dataset.category.split("|");
+    if (selectedValue === "all" || categories.includes(selectedValue)) {
       item.classList.add("active");
     } else {
       item.classList.remove("active");
